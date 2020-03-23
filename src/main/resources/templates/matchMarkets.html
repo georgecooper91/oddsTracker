@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head th:replace="fragments/layout :: headerFragment(pageTitle='Track Odds')">
+		<title>pageTitle</title>
+	</head>
+	<body>
+		<nav th:replace="fragments/layout :: navbar">navbar</nav>
+		
+		<div class="container-fluid">You have selected id <span th:text="${modal.url}">user</span>
+		</div>
+
+		<div class="container-fluid pt-5">
+			<div class="mx-auto row row-cols-1 row-cols-md-3 justify-content-center align-items-cente">
+				<div class="card-deck col mb-4" th:each="market : ${modal.markets}">
+					<div class="card" style="width: 18rem;">
+<!--						<img src="..." class="card-img-top" alt="...">-->
+						<div class="card-body">
+							<h5 th:text="${market.marketName}" class="card-title">Card title</h5>
+							<p th:text="|Market opens at ${market.marketStartTime}|" class="card-text">Market start time</p>
+							<p th:text="|The total matched so far ${market.totalMatched}|" class="card-text">Total matched</p>
+						</div>
+						<form class="card-body" th:action="@{'/trackodds/' + ${modal.url} + '/' + ${market.marketId}}" method="post" th:object="${chosenMarket}">
+							<input type="hidden" th:value="${market.marketName}" name="marketName", id="marketName">
+							<input type="hidden" th:value="${market.marketStartTime}" name="marketStartTime", id="marketStartTime">
+							<input type="hidden" th:value="${market.totalMatched}" value="totalMatched", id="totalMatched">
+							<button type="submit" class="btn btn-primary" >See prices</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer th:replace="fragments/layout :: footer">footer</footer>
+	</body>
+</html>

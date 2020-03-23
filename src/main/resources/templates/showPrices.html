@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/layout :: headerFragment(pageTitle='Track Odds')">
+    <title>pageTitle</title>
+</head>
+    <body>
+        <nav th:replace="fragments/layout :: navbar">navbar</nav>
+
+        <div class="mx-auto container-fluid">You have selected id <span th:text="${modal.url}">user</span>
+        </div>
+        <div class="container-fluid pt-5">
+            <div th:each="price : ${modal.prices}" class="jumbotron">
+                <h1 th:text="${price.marketName}" class="display-4 mx-auto">Market Name</h1>
+                <p th:text="${price.marketStartTime}" class="lead">Market start time</p>
+                <hr class="my-4">
+                <p th:text="|The state of this market is: ${price.status}|" class="lead">Status</p>
+                <p th:text="|The total matched is £${#numbers.formatDecimal(price.totalMatched, 1, 'DEFAULT', 2, 'DEFAULT')}|" class="lead">Total matched</p>
+                <p th:text="|The total available is £${#numbers.formatDecimal(price.totalAvailable, 1, 'DEFAULT', 2, 'DEFAULT')}|" class="lead">Total available</p>
+                <ul class="list-group">
+                    <li th:each="runner : ${price.runners}" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 th:text="${runner.runnerName}" class="mb-3">Runner name</h5>
+                            <small>Price / Size</small>
+                        </div>
+                        <div class="d-flex w-100 justify-content-between">
+                            <p class="mb-0">Available to back at: </p><!--<span th:text="${back.price}">Backing price</span>-->
+                            <p class="mb-0" th:each="back : ${runner.ex.availableToBack}"><button type="submit" class="btn btn-primary" th:text="${back.price}">See prices</button> / <span th:text="${back.size}">Lay price</span></p>
+                        </div>
+                        <hr class="my-0">
+                        <div th:each="lay : ${runner.ex.availableToLay}" class="d-flex w-100 justify-content-between">
+                            <p class="mb-1">Available to lay at: </p><!-- <span th:text="${lay.price}">Backing price</span>-->
+                            <p >
+                            <form method="post" th:action="@{'/trackodds/' + ${modal.url.id} + '/' + ${modal.url.matchId} + '/' + ${modal.url.marketId} + '/' + ${lay.price}}">
+                                <input type="hidden" th:value="${runner.selectionId}" name="selectionId" id="selectionId">
+                                <button type="submit" class="btn btn-primary" th:text="${lay.price}">See prices</button>
+                            </form> / <span th:text="${lay.size}">Lay price</span></p>
+                        </div>
+                        <small>Last price traded: <span th:text="${runner.lastPriceTraded}">Trade</span></small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <footer th:replace="fragments/layout :: footer">footer</footer>
+
+    </body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head th:replace="fragments/layout :: headerFragment(pageTitle='Odds Jumper Profile')">
+		<title>pageTitle</title>
+	</head>
+	<body>
+		<nav th:replace="fragments/layout :: navbar">navbar</nav>
+		
+		<div class="container-fluid">Welcome <span th:text="${user}">user</span></div>
+		
+		<footer th:replace="fragments/layout :: footer">footer</footer>
+	
+	</body>
+
+</html>

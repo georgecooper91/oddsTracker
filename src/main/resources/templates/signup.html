@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head th:replace="fragments/layout :: headerFragment(pageTitle='Odds Jumper - Sign Up')">
+		<title>pageTitle</title>
+	</head>
+	<body>
+	
+	<div class="container">
+		<p>Take 20 seconds to sign up and start using our service</p>
+		
+ 	<form th:action="@{/newuser}" method="POST" th:object="${user}">
+	  <div class="form-group">
+	    <label for="exampleInputEmail1">User name</label>
+	    <input type="text" class="form-control" name="username" id="username" th:field="*{userName}"> <!--  -->
+	    <small id="emailHelp" class="form-text text-muted">We'll never share your data with anyone else.</small>
+	  </div>
+	  <div class="form-group">
+	    <label for="password">Password</label>
+	    <input type="password" class="form-control" name="password" id="password" th:field="*{password}"> <!-- th:field="*{password}" -->  
+	  </div>
+	  <div class="form-group">
+	    <label for="repeat-password">Repeat Password</label>
+	    <input type="password" class="form-control" name="repeat-password" id="repeat-password" th:field="*{repeatPassword}"> <!-- th:field="*{repeatPassword}" --> 
+	  </div>
+	   <div th:errors="*{repeatPassword}">Error</div>
+	  <button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+	
+		 
+	
+	
+	</div>
+	
+	
+	
+		<footer th:replace="fragments/layout :: footer">footer</footer>
+	
+	</body>
+
+</html>

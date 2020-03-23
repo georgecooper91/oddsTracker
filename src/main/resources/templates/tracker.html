@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head th:replace="fragments/layout :: headerFragment(pageTitle='Track Odds')">
+		<title>pageTitle</title>
+	</head>
+	<body>
+		<nav th:replace="fragments/layout :: navbar">navbar</nav>
+		
+		<div class="container-fluid"><span th:text="${user}">user</span> what match's odds would you like 
+		to track</div>
+		
+		<div class="container-fluid pt-5">
+			<div class="">
+				<div class="row row-cols-1 row-cols-md-3 justify-content-center align-items-cente" style="width: 100%;">
+					<div th:each="comp : ${model.competitions}" class="card-deck col mb-4">
+						<div class="card" style="width: 18rem;">
+							<!--					  <img src="..." class="card-img-top" alt="...">-->
+							<div class="card-body">
+								<h5 th:text="${comp.competition.name}" class="card-title">Card title</h5>
+								<p th:text="'Number of markets ' + ${comp.marketCount}" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+								<a th:href="@{'/trackodds/' + ${comp.competition.id}}" href="#" class="btn btn-primary">See matches</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<footer th:replace="fragments/layout :: footer">footer</footer>
+	
+	</body>
+
+</html>
