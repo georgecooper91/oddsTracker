@@ -20,8 +20,8 @@ public class CallBetfair {
 				 .uri(URI.create("https://api.betfair.com/exchange/betting/json-rpc/v1/"))
 				 .header("content-type", "application/json")
 				 .header("X-Application", System.getenv("BET-X-Application"))
-				 .header("X-Authentication", System.getenv("BET-X-Auth"))
-				 .POST(BodyPublishers.ofString(json))
+				 .header("X-Authentication", "CNjz8dzPqL5whg5Hw7gog5/IWqZvS0IkB18rUBKZDVk=")
+				 .POST(BodyPublishers.ofString(json))//System.getenv("BET-X-Auth")
 				 .build();
 	  
 		  HttpResponse<String> response = 
@@ -29,6 +29,6 @@ public class CallBetfair {
 		  System.out.println(response.statusCode());
 		  System.out.println(response.body()); 
 		  return response.body(); 
-	  }
+	 }
 
 }

@@ -12,6 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.stream.Collectors;
 
 import com.trackodds.trackodds.models.makerequest.PriceProjection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,41 +32,20 @@ import com.trackodds.trackodds.models.makerequest.ReqComps;
 @Service
 public class GetMatchInfoImp implements GetMatchInfo {
 
-	Catalogue myCatalogue;
-	//MarketRepo marketRepo;
-	PriceProjection priceProjection;
-	ReqComps reqComps;
-	Params params;
-	Filter filter;	
-	CallBetfair callBetfair;	
-	ObjectMapper mapper;
+	private Catalogue myCatalogue;
+	private PriceProjection priceProjection;
+	private ReqComps reqComps;
+	private Params params;
+	private Filter filter;
+	private CallBetfair callBetfair;
+	private ObjectMapper mapper;
 	private Map<String, Object> filters;
 	private final String uri = "SportsAPING/v1.0/";
 	private String request;
 	private String response;
-	List<Market> markets;
 
-
-	List<Market> meakets3;
-
-//	public GetMatchInfoImp(PriceProjection priceProjection, ReqComps reqComps, Params params, Filter filter, CallBetfair callBetfair) {
-//		this.priceProjection = priceProjection;
-//		this.reqComps = reqComps;
-//		this.params = params;
-//		this.filter = filter;
-//		this.callBetfair = callBetfair;
-//	}
-
-//	public GetMatchInfoImp(MarketRepo marketRepo, PriceProjection priceProjection, ReqComps reqComps, Params params, Filter filter, CallBetfair callBetfair) {
-//		this.marketRepo = marketRepo;
-//		this.priceProjection = priceProjection;
-//		this.reqComps = reqComps;
-//		this.params = params;
-//		this.filter = filter;
-//		this.callBetfair = callBetfair;
-//	}
-
-		public GetMatchInfoImp(Catalogue catalogue, PriceProjection priceProjection, ReqComps reqComps, Params params, Filter filter, CallBetfair callBetfair) {
+	@Autowired
+	public GetMatchInfoImp(Catalogue catalogue, PriceProjection priceProjection, ReqComps reqComps, Params params, Filter filter, CallBetfair callBetfair) {
 		this.myCatalogue = catalogue;
 		this.priceProjection = priceProjection;
 		this.reqComps = reqComps;
@@ -141,7 +121,6 @@ public class GetMatchInfoImp implements GetMatchInfo {
 	@Override
 	public List<Market> getMarketsForMatch(String eventId) throws IOException, InterruptedException {
 		String method = uri + "listMarketCatalogue";
-		
 		filters = filter.getFilters();
 		filters.clear();
 		filters.put("eventIds", Arrays.asList(eventId));

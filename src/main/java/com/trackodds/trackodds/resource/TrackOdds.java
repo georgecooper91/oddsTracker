@@ -1,6 +1,7 @@
 package com.trackodds.trackodds.resource;
 
 import com.trackodds.trackodds.models.jsonobject.marketcatalogue.Market;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Objects;
@@ -11,12 +12,14 @@ public class TrackOdds implements Callable<String> {
     private final String marketIdToTrack;
     private final long selectionIdToTrack;
     private final String priceToTrack;
-    GetMatchInfo getMatchInfo;
+    private GetMatchInfo getMatchInfo;
 
-    public TrackOdds(String marketIdToTrack, String priceToTrack, long selectionIdToTrack) {
+    @Autowired
+    public TrackOdds(String marketIdToTrack, String priceToTrack, long selectionIdToTrack, GetMatchInfo getMatchInfo) {
         this.marketIdToTrack = marketIdToTrack;
         this.selectionIdToTrack = selectionIdToTrack;
         this.priceToTrack = priceToTrack;
+        this.getMatchInfo = getMatchInfo;
     }
 
 
@@ -40,6 +43,7 @@ public class TrackOdds implements Callable<String> {
             if(!newPrice.isEmpty()) newPriceDouble = Double.parseDouble(newPrice);
         }
         boolean oddsJump = priceDouble - newPriceDouble > 0.2;
-        return oddsJump ? "JUMP" : "cONTINUE" ;
+        System.out.println("The difference is " + (priceDouble - newPriceDouble));
+        return oddsJump ? "JUMP" : "CONTINUE" ;
     }
 }

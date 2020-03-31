@@ -21,12 +21,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class MakeRequest {
 
-	GetMatchInfoImp getMatchInfo;
-	SetupTracker setupTracker;
+	private GetMatchInfoImp getMatchInfo;
+	private SetupTracker setupTracker;
 
 	@Autowired
-	public MakeRequest(GetMatchInfoImp getMatchInfoImp) {
-		 this.getMatchInfo = getMatchInfoImp;
+	public MakeRequest(GetMatchInfoImp getMatchInfoImp, SetupTracker setupTracker) {
+		this.getMatchInfo = getMatchInfoImp;
+		this.setupTracker = setupTracker;
 	 }
 	 
 	@RequestMapping("/trackodds")
@@ -79,16 +80,16 @@ public class MakeRequest {
 	@RequestMapping(value="/trackodds/{id}/{matchId}/{marketId}/{price}",
 		method = RequestMethod.POST
 	)
-	public String trackPrice(@PathVariable Map<String, String> varsMap, RedirectAttributes redirAttrs, long selectionId){
+	public String trackPrice(@PathVariable Map<String, String> varsMap, RedirectAttributes redirAttrs, long selectionId) throws Exception {
 //		Map<String, Object> modal = new HashMap<>();
 //		modal.put("selectionId", selectionId);
 //		modal.put("url", varsMap);
 		String marketIdd = varsMap.get("marketId");
 		String pricett = varsMap.get("price");
-		setupTracker.trackOddsServ(marketIdd, pricett, selectionId);
-		redirAttrs.addAttribute("message", "Now tracking this price");
+		setupTracker.trackOddsServ(marketIdd, pricett, selectionId, getMatchInfo);
+		//redirAttrs.addAttribute("message", "Now tracking this price");
 		return "redirect:/trackodds";
-				//"redirect:/trackodds/{id}/{matchId}/{marketId}";
+
 	}
 
 
